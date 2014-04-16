@@ -1,0 +1,54 @@
+parse_git_dirty() {
+    [[ $(git status 2> /dev/null | tail -n1) != *"working directory clean"* ]] && echo "*"
+}
+
+parse_git_branch() {
+    git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e "s/* \(.*\)/\1$(parse_git_dirty)/"
+}
+
+set_prompt() {
+    local last_ret="$?"
+    if [[ $COLORTERM = gnome-* && echo = xterm ]] && infocmp gnome-256color >/dev/null 2>&1; then
+        export TERM=gnome-256color
+    elif infocmp xterm-256color >/dev/null 2>&1; then
+        export TERM=xterm-256color
+    fi
+
+    if tput setaf 1 &> /dev/null; then
+        tput sgr0
+        if [[ $(tput colors) -ge 256 ]] 2>/dev/null; then
+            local BLUE=$(tput setaf 26)
+            local RED=$(tput setaf 160)
+            local ORANGE=$(tput setaf 208)
+            local GREEN=$(tput setaf 34)
+            local PURPLE=$(tput setaf 93)
+            local WHITE=$(tput setaf 8)
+        else
+            local BLUE=$(tput setaf 4)
+            local RED=$(tput setaf 1)
+            local ORANGE=$(tput setaf 9)
+            local GREEN=$(tput setaf 2)
+            local PURPLE=$(tput setaf 5)
+            local WHITE=$(tput setaf 8)
+        fi
+        #local BOLD=$(tput bold) #Lets not use bold in fancy term
+        local RESET=$(tput sgr0)
+    else
+        local BLUE="\033[0;94m"
+        local RED="\033[0;31m"
+        local ORANGE="\033[0;93m"
+        local GREEN="\033[0;92m"
+        local PURPLE="\033[0;95m"
+        local WHITE="\033[0;36m"
+        local BOLD=""
+        local RESET="\033[m"
+    fi
+
+    PS1=""
+    PS1+="\[${BOLD}${GREEN}\]\u \[$WHITE\]at \[$BLUE\]\h \[$WHITE\]in \[$ORANGE\]\w\[$WHITE\]\$([[ -n \$(git branch 2> /dev/null) ]] && echo \" on \")\[$PURPLE\]\$(parse_git_branch)\n"
+    [[ $last_ret != 0 ]] && PS1+="\[${BOLD}${RED}\]$last_ret " || PS1+="\[$WHITE\]$last_ret "
+    PS1+="\[$WHITE\]\$ \[$RESET\]"
+    PS2="\[$ORANGE\]→ \[$RESET\]"
+}
+
+PROMPT_COMMAND='set_prompt'
