@@ -1,3 +1,4 @@
+colorscheme molokai
 set nocompatible
 set clipboard=unnamed
 set encoding=utf-8 nobomb
@@ -29,12 +30,19 @@ if !isdirectory(expand("$HOME/.vim/backups"))
 endif
 set backupdir=$HOME/.vim/backups
 set backupskip=/tmp/*,/private/tmp/*
+if !isdirectory(expand("$HOME/.vim/undo"))
+  call mkdir(expand("$HOME/.vim/undo"), 'p')
+endif
+set undodir=$HOME/.vim/undo
+set undofile
+set undolevels=1000
+set undolevels=10000
 set wildmenu
 set wildmode=longest:list,full
 set wildignore+=*DS_Store*
 set wildignore+=*.png,*.jpg,*.gif
 set nowrap
-syn on
+syntax on
 function! StripWhitespace()
         let save_cursor = getpos(".")
         let old_query = getreg('/')
