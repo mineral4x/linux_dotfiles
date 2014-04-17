@@ -38,3 +38,5 @@ set convert-meta off
 
 # Use Alt/Meta + Delete to delete the preceding word
 "\e[3;3~": kill-word
+"\e[1~": beginning-of-line
+"\e[4~": end-of-line
