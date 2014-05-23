@@ -13,8 +13,8 @@ set scrolljump=5
 " Allow backspace in insert mode
 set backspace=indent,eol,start
 set autoread
-set autoindent
-set smartindent
+" set autoindent
+" set smartindent
 set smarttab
 set shiftwidth=4
 set tabstop=4
