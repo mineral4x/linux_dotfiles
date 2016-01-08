@@ -45,12 +45,12 @@ set_prompt() {
     fi
 
     PS1=""
-    if [ "$(id -u)" == "0" ]; then
+    if [[ $(id -u) == 0 ]]; then
       PS1+="\[${BOLD}${RED}\]\u \[$WHITE\]at \[$BLUE\]\h \[$WHITE\]in \[$ORANGE\]\w\[$WHITE\]\$([[ -n \$(git branch 2> /dev/null) ]] && echo \" on \")\[$PURPLE\]\$(parse_git_branch)\n"
     else
       PS1+="\[${BOLD}${GREEN}\]\u \[$WHITE\]at \[$BLUE\]\h \[$WHITE\]in \[$ORANGE\]\w\[$WHITE\]\$([[ -n \$(git branch 2> /dev/null) ]] && echo \" on \")\[$PURPLE\]\$(parse_git_branch)\n"
     fi
-    [[ $last_ret != 0 ]] && PS1+="\[${BOLD}${RED}\]$last_ret " || PS1+="\[$WHITE\]$last_ret "
+    [[ $last_ret == 0 ]] && PS1+="\[$WHITE\]$last_ret " || PS1+="\[${BOLD}${RED}\]$last_ret "
     PS1+="\[$WHITE\]\$ \[$RESET\]"
     PS2="\[$ORANGE\]→ \[$RESET\]"
 }
