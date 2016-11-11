@@ -1,4 +1,4 @@
-colorscheme molokai
+colorscheme flatcolor
 set nocompatible
 syntax on
 set confirm
@@ -11,7 +11,7 @@ set nomodeline
 set encoding=utf-8 nobomb
 set hlsearch
 set showmode
-set nowrap
+" set nowrap
 set incsearch
 set ignorecase
 set smartcase
@@ -20,8 +20,8 @@ set scrolljump=5
 " Allow backspace in insert mode
 set backspace=indent,eol,start
 set autoread
-set autoindent
-set smartindent
+" set autoindent
+" set smartindent
 set smarttab
 set shiftwidth=2
 set softtabstop=2
