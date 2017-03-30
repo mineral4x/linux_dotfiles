@@ -43,3 +43,6 @@ alias whois="whois -h whois-servers.net"
 
 # Dos2Unix
 alias d2u="tr '\r' '\n'"
+
+# Always use colored grep
+alias grep='grep --color=auto'
